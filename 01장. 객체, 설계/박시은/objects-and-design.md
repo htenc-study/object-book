@@ -6,7 +6,7 @@
 - 개발자는 구체적인 코드를 만지며 손을 더럽힐 때 가장 많은것을 얻어가는 존재다.
 
 # 01 티켓 판매 애플리케이션 구현하기
-<img width="1123" height="445" alt="image" src="https://github.com/user-attachments/assets/745bc141-86e3-4c89-a90d-033f092fe4ef" />
+<img width="1414" height="769" alt="image" src="https://github.com/user-attachments/assets/625fb485-d0e9-4198-b33b-809a2b30ba9c" />
 
 ```
 public class Theater {
@@ -42,4 +42,27 @@ public class Theater {
 ### 설계의 목표
 - 애플리케이션의 기능을 구현하는 데 필요한 최소한의 의존성만 유지하고 불필요한 의존성을 제거하는 것.
 - 객체 사이의 결합도를 낮춰 변경이 용이한 설계를 만드는 것.
+
+# 03 설계 개선하기
+<img width="1100" height="638" alt="image" src="https://github.com/user-attachments/assets/4363e8ea-dd66-4ce1-b57b-a5caef410189" />
+
+```
+package org.eternity.theater.step03;
+
+public class Theater {
+    private TicketSeller ticketSeller;
+
+    public Theater(TicketSeller ticketSeller) {
+        this.ticketSeller = ticketSeller;
+    }
+
+    public void enter(Audience audience) {
+        ticketSeller.sellTo(audience);
+    }
+}
+```
+- Theater은 TicketOffice에 접근하지 않는다.
+- Theater은 오직 TicketSeller의 인터페이스에만 의존한다.
+- 객체를 인터페이스와 구현으로 나누고 인터페이스만을 공개하는 것은 객체 사이의 결합도를 낮추고 변경하기 쉬운 코드를 작성하기 위해 따라야 하는 가장 기본적인 설계 원칙이다.
+
 
