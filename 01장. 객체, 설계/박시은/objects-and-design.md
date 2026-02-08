@@ -37,6 +37,7 @@ public class Theater {
 - 코드를 읽는 사람과 의사소통하는 것
 ## 의존성과 결합도
 - 의존성은 변경에 대한 영향을 암시한다.
+- 메시지를 전송하기 위한 지식이 두 객체를 결합시키고 이 결합이 객체 사이의 의존성을 만든다.
 - 객체 사이의 의존성이 과한 경우를 가리켜 결합도가 높다고 말한다.
 - 두 객체 사이의 결합도가 높으면 높을수록 함께 변경될 확률도 높아지기 때문에 변경하기 어려워진다.
 ### 설계의 목표
@@ -47,8 +48,6 @@ public class Theater {
 <img width="1100" height="638" alt="image" src="https://github.com/user-attachments/assets/4363e8ea-dd66-4ce1-b57b-a5caef410189" />
 
 ```
-package org.eternity.theater.step03;
-
 public class Theater {
     private TicketSeller ticketSeller;
 
@@ -94,7 +93,38 @@ public class Bag {
 }
 ```
 - Bag의 내부 상태에 접근하는 모든 로직을 Bag안으로 캡슐화해서 결합도를 낮춘다.
-- 객체를 인터페이스와 구현으로 나누고 인터페이스만을 공개하는 것은 객체 사이의 결합도를 낮추고 변경하기 쉬운 코드를 작성하기 위해 따라야 하는 가장 기본적인 설계 원칙이다.
+```
+public class TicketSeller {
+    private TicketOffice ticketOffice;
+
+    public TicketSeller(TicketOffice ticketOffice) {
+        this.ticketOffice = ticketOffice;
+    }
+
+    public void sellTo(Audience audience) {
+        ticketOffice.plusAmount(audience.buy(ticketOffice.getTicket()));
+    }
+}
+```
+```
+public class TicketSeller {
+    private TicketOffice ticketOffice;
+
+    public TicketSeller(TicketOffice ticketOffice) {
+        this.ticketOffice = ticketOffice;
+    }
+
+    // 아래 코드는 책에서 설명한 것처럼 트레이드오프 후에 원래의 step02의 구현으로 복구해야 합니다.
+    public void sellTo(Audience audience) {
+        ticketOffice.sellTicketTo(audience);
+    }
+}
+```
+<img width="993" height="253" alt="image" src="https://github.com/user-attachments/assets/fe71f545-f644-4e57-b29d-37a27ed3b8ca" />
+- TicketOffice의 자율성보다는 Audience에 대한 결합도를 낮추는 것을 선택한 설계
+- 어떤 기능을 설계하는 방법은 한가지 이상일 수 있다.
+- 동일한 기능을 한 가지 이상의 방법으로 설계할 수 있기 때문에 결국 설계는 트레이드오프의 산물이다.
+- 어떤 경우에도 모든 사람들을 만족시킬 수 있는 설계를 만들 수는 없다.
 ## 응집도
 - 밀접하게 연관된 작업만을 수행하고 연관성 없는 작업은 다른 객체에 위임하는 객체를 가리켜 응집도가 높다고 말한다.
 - 객체는 자신의 데이터를 스스로 처리하는 자율적인 존재여야 한다.
@@ -105,5 +135,15 @@ public class Bag {
 - 데이터와 프로세스가 동일한 모듈 내부에 위치하도록 프로그래밍하는 방식
 - 절차지향에 비해 변경에 좀 더 유연하다.
 - 불필요한 세부사항을 캡슐화하는 자율적인 객체들이 낮은 결합도와 높은 응집도를 가지고 협력하도록 최소한의 의존성만을 남기는 설계
+## 의인화
+- 능동적이고 자율적인 존재로 소프트웨어 객체를 설계하는 원칙
+- 모든 생물처럼 소프트웨어는 태어나고, 삶을 영위하고, 그리고 죽는다.
+# 04 객체지향 설계
+- 설계는 코드를 작성하는 매 순간 코드를 어떻게 배치할 것인지 결정하는 과정
+## 좋은 설계
+- 오늘 요구하는 기능을 온전히 수행하면서 내일의 변경을 매끄럽게 수용할 수 있는 설계
+## 변경을 수용할 수 있는 설계가 중요한 이유
+- 요구사항이 항상 변경되기 때문이다.
+- 코드를 변경할 때 버그가 추가될 가능성이 높기 때문이다.
 
 
