@@ -120,6 +120,7 @@ public class TicketSeller {
 }
 ```
 <img width="993" height="253" alt="image" src="https://github.com/user-attachments/assets/fe71f545-f644-4e57-b29d-37a27ed3b8ca" />
+
 - TicketOffice의 자율성보다는 Audience에 대한 결합도를 낮추는 것을 선택한 설계
 - 어떤 기능을 설계하는 방법은 한가지 이상일 수 있다.
 - 동일한 기능을 한 가지 이상의 방법으로 설계할 수 있기 때문에 결국 설계는 트레이드오프의 산물이다.
@@ -144,6 +145,7 @@ public class TicketSeller {
 ## 변경을 수용할 수 있는 설계가 중요한 이유
 - 요구사항이 항상 변경되기 때문이다.
 - 코드를 변경할 때 버그가 추가될 가능성이 높기 때문이다.
+
 
 
 
