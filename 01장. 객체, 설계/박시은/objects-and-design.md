@@ -114,7 +114,6 @@ public class TicketSeller {
         this.ticketOffice = ticketOffice;
     }
 
-    // 아래 코드는 책에서 설명한 것처럼 트레이드오프 후에 원래의 step02의 구현으로 복구해야 합니다.
     public void sellTo(Audience audience) {
         ticketOffice.sellTicketTo(audience);
     }
@@ -145,5 +144,6 @@ public class TicketSeller {
 ## 변경을 수용할 수 있는 설계가 중요한 이유
 - 요구사항이 항상 변경되기 때문이다.
 - 코드를 변경할 때 버그가 추가될 가능성이 높기 때문이다.
+
 
 
