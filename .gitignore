@@ -1,0 +1,31 @@
+isr/HELP.md
+.gradle
+build/
+**/target/*
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### VS Code ###
+.vscode/
+
+### Windows ###
+desktop.ini
+
+### LOG ###
+logs/
+
+### 자동 생성 파일 ##
+src/main/generated
+
+*.swp
+.DS_Store
