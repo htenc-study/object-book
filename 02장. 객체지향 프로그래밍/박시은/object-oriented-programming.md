@@ -113,3 +113,36 @@ public abstract class DiscountPolicy {
 - 구현 상속 (=서브클래싱) : 코드를 재사용하기 위한 목적으로 상속을 사용하는 것
 - 인터페이스 상속 (=서브타이핑) : 다형적인 협력을 위해 부모 클래스와 자식 클래스가 인터페이스를 공유할 수 있도록 상속을 이용하는 것
 
+# 추상화와 유연성
+<img width="1305" height="191" alt="image" src="https://github.com/user-attachments/assets/43ccc04a-421c-4545-bd4c-698ab30cf3f5" />
+- 추상화의 계층만 따로 떼어 놓고 살펴보면 요구사항의 정책을 높은 수준에서 서술한다.
+- 추상화를 이용하면 설계가 좀 더 유연해진다.
+- 디자인 패턴이나 프레임워크 모두 추상화를 이용해 상위정책을 정의하는 객체지향의 메커니즘을 활용한다.
+
+## 추상클래스와 인터페이스 트레이드오프
+<img width="1961" height="627" alt="image" src="https://github.com/user-attachments/assets/b3a52cf2-807f-407c-86fb-0640439b00df" />
+<img width="1090" height="492" alt="image" src="https://github.com/user-attachments/assets/d5b288e9-2e37-439b-9546-0de3a1e71ca9" />
+- DiscountPolicy를 인터페이스로 바꾸고 NoneDiscountPolicy가 DiscountPolicy의 getDiscountAmount() 메서드가 아닌 calculateDiscountAmount() 오퍼레이션을 오버라이딩하도록 변경
+- 구현과 모든 것들이 트레이드오프의 대상이 될 수 있다.
+
+## 상속의 문제점
+- 캡슐화를 위반한다.
+- 설계를 유연하게 하지 못하게 만든다.
+- 상속을 과도하게 사용한 코드는 변경하기도 어려워진다.
+```
+Movie avatar = new Movie("아바타",
+    Duration.offMinutes(120),
+    Money.wons(10000),
+    new AmountDiscountPolicy(Money.wons(800),...));
+
+avatar.changeDiscountPolicy(new PercentDiscountPolicy(0.1, ...));
+```
+- 상속보다 인스턴스 변수로 관계를 연결한 원래의 설계가 더 유연하다.
+
+## 합성
+- 다른 객체의 인스턴스를 자신의 인스턴스 변수로 포함해서 재사용하는 방법
+- 인터페이스에 정의된 메시지를 통해서만 코드를 재사용하는 방법
+- 의존하는 인스턴스를 교체하는 것이 비교적 쉽기 때문에 설계를 느슨하게 만든다.
+
+
+
