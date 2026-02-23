@@ -36,6 +36,7 @@ public class Screening {
 - 객체의 상태는 숨기고 행동만 외부에 공개해야 한다.
 - 접근 수정자 : public, protected, private
 <img width="733" height="267" alt="image" src="https://github.com/user-attachments/assets/770c36a7-0e96-4545-9996-b1a6eda754e9" />
+
 ### 프로그래머의 자유
 - 클래스 작성자 : 새로운 데이터 타입을 프로그램에 추가
 - 클라이언트 프로그래머 : 클래스 작성자가 추가한 데이터 타입을 사용
@@ -144,6 +145,7 @@ avatar.changeDiscountPolicy(new PercentDiscountPolicy(0.1, ...));
 - 다른 객체의 인스턴스를 자신의 인스턴스 변수로 포함해서 재사용하는 방법
 - 인터페이스에 정의된 메시지를 통해서만 코드를 재사용하는 방법
 - 의존하는 인스턴스를 교체하는 것이 비교적 쉽기 때문에 설계를 느슨하게 만든다.
+
 
 
 
