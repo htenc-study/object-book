@@ -127,6 +127,7 @@ public abstract class DiscountPolicy {
 ## 추상클래스와 인터페이스 트레이드오프
 <img width="1961" height="627" alt="image" src="https://github.com/user-attachments/assets/b3a52cf2-807f-407c-86fb-0640439b00df" />
 <img width="1090" height="492" alt="image" src="https://github.com/user-attachments/assets/d5b288e9-2e37-439b-9546-0de3a1e71ca9" />
+
 - DiscountPolicy를 인터페이스로 바꾸고 NoneDiscountPolicy가 DiscountPolicy의 getDiscountAmount() 메서드가 아닌 calculateDiscountAmount() 오퍼레이션을 오버라이딩하도록 변경
 - 구현과 모든 것들이 트레이드오프의 대상이 될 수 있다.
 
@@ -148,6 +149,7 @@ avatar.changeDiscountPolicy(new PercentDiscountPolicy(0.1, ...));
 - 다른 객체의 인스턴스를 자신의 인스턴스 변수로 포함해서 재사용하는 방법
 - 인터페이스에 정의된 메시지를 통해서만 코드를 재사용하는 방법
 - 의존하는 인스턴스를 교체하는 것이 비교적 쉽기 때문에 설계를 느슨하게 만든다.
+
 
 
 
