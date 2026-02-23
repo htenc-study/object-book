@@ -10,7 +10,7 @@
 <img width="1313" height="330" alt="image" src="https://github.com/user-attachments/assets/5a407242-174b-4b6a-b466-90265e75559a" />
 
 ## 클래스 구현하기
-```
+```java
 public class Screening {
     private Movie movie;
     private int sequence;
@@ -149,6 +149,7 @@ avatar.changeDiscountPolicy(new PercentDiscountPolicy(0.1, ...));
 - 다른 객체의 인스턴스를 자신의 인스턴스 변수로 포함해서 재사용하는 방법
 - 인터페이스에 정의된 메시지를 통해서만 코드를 재사용하는 방법
 - 의존하는 인스턴스를 교체하는 것이 비교적 쉽기 때문에 설계를 느슨하게 만든다.
+
 
 
 
