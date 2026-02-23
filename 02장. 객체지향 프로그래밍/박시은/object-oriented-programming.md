@@ -87,6 +87,7 @@ public abstract class DiscountPolicy {
 # 상속과 다형성
 ## 컴파일 시간 의존성과 실행 시간 의존성
 <img width="1016" height="408" alt="image" src="https://github.com/user-attachments/assets/bd93a984-0190-4e19-8b68-bf9bda57099a" />
+
 - Movie클래스는 오직 추상 클래스인 DiscountPolicy에만 의존하고 있다.
 - 코드의 의존성과 실행 시점의 의존성이 서로 다를 수 있다.
 - 코드의 의존성과 실행 시점의 의존성이 다르면 다를수록 코드를 이해하기 어려워지는 반면에 코드는 더 유연해지고 확장 가능해진다.
@@ -118,6 +119,7 @@ public abstract class DiscountPolicy {
 
 # 추상화와 유연성
 <img width="1305" height="191" alt="image" src="https://github.com/user-attachments/assets/43ccc04a-421c-4545-bd4c-698ab30cf3f5" />
+
 - 추상화의 계층만 따로 떼어 놓고 살펴보면 요구사항의 정책을 높은 수준에서 서술한다.
 - 추상화를 이용하면 설계가 좀 더 유연해진다.
 - 디자인 패턴이나 프레임워크 모두 추상화를 이용해 상위정책을 정의하는 객체지향의 메커니즘을 활용한다.
@@ -146,6 +148,7 @@ avatar.changeDiscountPolicy(new PercentDiscountPolicy(0.1, ...));
 - 다른 객체의 인스턴스를 자신의 인스턴스 변수로 포함해서 재사용하는 방법
 - 인터페이스에 정의된 메시지를 통해서만 코드를 재사용하는 방법
 - 의존하는 인스턴스를 교체하는 것이 비교적 쉽기 때문에 설계를 느슨하게 만든다.
+
 
 
 
