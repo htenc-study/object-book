@@ -40,5 +40,50 @@
 - 어떤 협력에서 하나 이상의 객체가 동일한 책임을 수행할 수 있다면 역할은 서로 다른 방법으로 실행할 수 있는 책임의 집합이 된다.
 - 역할이란 프로그램이 실행될 때 소프트웨어 기계 장치에서 적절한 객체로 메워 넣을 수 있는 하나의 슬롯
 
+# 예시 코드
+```java
+@Entity
+@Table(name = "blood_pressure_record")
+public class BloodPressureRecord {
 
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private Long userId;
+
+    @Column(nullable = false)
+    private int systolic;   // 최고혈압
+
+    @Column(nullable = false)
+    private int diastolic;  // 최저혈압
+
+    @Column(nullable = false)
+    private LocalDateTime measuredAt;
+
+    protected BloodPressureRecord() {}
+
+    public BloodPressureRecord(Long userId, int systolic, int diastolic, LocalDateTime measuredAt) {
+        this.userId = userId;
+        this.systolic = systolic;
+        this.diastolic = diastolic;
+        this.measuredAt = measuredAt;
+    }
+
+    public Long getId() { return id; }
+    public Long getUserId() { return userId; }
+    public int getSystolic() { return systolic; }
+    public int getDiastolic() { return diastolic; }
+    public LocalDateTime getMeasuredAt() { return measuredAt; }
+
+    public void update(int systolic, int diastolic, LocalDateTime measuredAt) {
+        this.systolic = systolic;
+        this.diastolic = diastolic;
+        this.measuredAt = measuredAt;
+    }
+}
+```
+- 역할 : 혈압 측정 1건
+- 책임 : 혈압 기록 상태를 알고 있다, 상태를 스스로 변경 (캡슐화)
+- 협력 : 서비스 객체가 update 메시지를 보내면 상태 변경으로 응답한다
 
