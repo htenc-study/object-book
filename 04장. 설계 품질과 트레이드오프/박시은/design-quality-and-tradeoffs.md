@@ -61,4 +61,5 @@ public class ReservationAgency {
 ```
 - 책임이 몰려있음 (할인 조건 검사, 할인 정책 계산, 가격 계산)
 - Movie 내부 정보를 직접 사용 (Movie가 바뀔 시 ReservationAgency도 수정해야한다.)
+  <image src="image.png" style="width:70%">
 - switch 사용 (OCP 위반)
