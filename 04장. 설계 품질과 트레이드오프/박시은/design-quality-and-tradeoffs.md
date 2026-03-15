@@ -202,4 +202,29 @@ public class ReservationAgency {
 ```
 - 기존에는 ReservationAgency가 할인 정책과 금액 계산 로직을 직접 처리했지만, 변경 후에는 Screening에게 요금 계산 책임을 위임하도록 바뀌었다.
   <image src="image4_5.png" style="width:70%">
-  
+
+# 05 하지만 여전히 부족하다
+```java
+public boolean isDiscountable(LocalDateTime whenScreened, int sequence) {
+    for(DiscountCondition condition : discountConditions) {
+        if (condition.getType() == DiscountConditionType.PERIOD) {
+            if (condition.isDiscountable(whenScreened.getDayOfWeek(), whenScreened.toLocalTime())) {
+                return true;
+            }
+        } else {
+            if (condition.isDiscountable(sequence)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+```
+- DiscountCondition의 기간 할인 조건의 명칭이 PERIOD에서 다른 값으로 변경된다면 Movie를 수정해야 한다.
+- DiscountCondition의 종류가 추가되거나 삭제된다면 Movie 안의 if ~ else 구문을 수정해야한다.
+- 각 DiscountCondition의 만족 여부를 판단하는 데 필요한 정보가 변경된다면 Movie의 isDiscountable 메서드로 전달된 파라미터를 변경해야 한다. 이로 인해 Movie의 isDiscountable 메서드 시그니처도 함께 변경될 것이고 결과적으로 이 메서드에 의존하는 Screening에 대한 변경을 초래할 것이다.
+
+# 06 데이터 중심 설계의 문제점
+- 데이터 중심의 설계는 본질적으로 너무 이른 시기에 데이터에 관해 결정하도록 강요한다.
+- 데이터 중심의 설계에서는 협력이라는 문맥을 고려하지 않고 객체를 고립시킨 채 오퍼레이션을 결정한다.
