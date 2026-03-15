@@ -77,3 +77,24 @@ public class ReservationAgency {
 - 일반적으로 변경될 확률이 매우 적은 안정적인 모듈에 의존하는 것은 아무런 문제가 되지 않는다.
 - 표준 라이브러리에 포함된 모듈이나 성숙 단계에 접어든 프레임 워크에 의존하는 경우
 - ex) java : String, ArrayList
+
+# 03 데이터 중심의 영화 예매 시스템의 문제점
+## 캡슐화 위반
+```java
+public class Movie {
+    public Money getFee() {
+        return fee;
+    }
+
+    public void setFee(Money fee) {
+        this.fee = fee;
+    }
+}
+```
+- getFee 메서드와 setFee 메서드는 Movie 내부에 Money 타입의 fee라는 이름의 인스턴스 변수가 존재한다는 사실을 퍼블릭 인터페이스에 노골적으로 드러낸다.
+- 만약 fee의 타입을 ㅂㄴ경한다고 가정하면 getFee 메서드의 반환타입, getFee 메서드를 호출하는 ReservationAgency의 구현을 변경된 타입에 맞게 함께 수정해야 한다.
+### 추측에 의한 설계 전략
+- 접근자와 수정자에 과도하게 의존하는 설계 방식
+- 이 전략은 객체가 사용될 협력을 고려하지 않고 객체가 다양한 상황에서 사용될 수 있을 것이라는 막연한 추측을 기반으로 설계를 진행한다.
+## 높은 결합도
+
