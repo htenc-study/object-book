@@ -109,4 +109,97 @@ public class Movie {
 - 할인 조건별로 할인 여부를 판단하는 방법이 변경될 경우
 - 예매 요금을 계산하는 방법이 변경될 경우
 # 04 자율적인 객체를 향해
+```java
+boolean discountable = false;
+for(DiscountCondition condition : movie.getDiscountConditions()) {
+    if (condition.getType() == DiscountConditionType.PERIOD) {
+        discountable = screening.getWhenScreened().getDayOfWeek().equals(condition.getDayOfWeek()) &&
+                condition.getStartTime().compareTo(screening.getWhenScreened().toLocalTime()) <= 0 &&
+                condition.getEndTime().compareTo(screening.getWhenScreened().toLocalTime()) >= 0;
+    } else {
+        discountable = condition.getSequence() == screening.getSequence();
+    }
 
+    if (discountable) {
+        break;
+    }
+}
+```
+```java
+public class DiscountCondition {
+    private DiscountConditionType type;
+
+    private int sequence;
+
+    private DayOfWeek dayOfWeek;
+    private LocalTime startTime;
+    private LocalTime endTime;
+
+    public DiscountCondition(int sequence){
+        this.type = DiscountConditionType.SEQUENCE;
+        this.sequence = sequence;
+    }
+
+    public DiscountCondition(DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime){
+        this.type = DiscountConditionType.PERIOD;
+        this.dayOfWeek= dayOfWeek;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    public DiscountConditionType getType() {
+        return type;
+    }
+
+    public boolean isDiscountable(DayOfWeek dayOfWeek, LocalTime time) {
+        if (type != DiscountConditionType.PERIOD) {
+            throw new IllegalArgumentException();
+        }
+
+        return this.dayOfWeek.equals(dayOfWeek) &&
+                this.startTime.compareTo(time) <= 0 &&
+                this.endTime.compareTo(time) >= 0;
+    }
+
+    public boolean isDiscountable(int sequence) {
+        if (type != DiscountConditionType.SEQUENCE) {
+            throw new IllegalArgumentException();
+        }
+
+        return this.sequence == sequence;
+    }
+}
+```
+- 할인 조건 판단 로직이 ReservationAgency에서 DiscountCondition으로 이동하면서 데이터와 행위가 한 객체 안에 모였고 DiscountCondition의 응집도가 높아졌다.
+```java
+Money fee;
+if (discountable) {
+    Money discountAmount = Money.ZERO;
+    switch(movie.getMovieType()) {
+        case AMOUNT_DISCOUNT:
+            discountAmount = movie.getDiscountAmount();
+            break;
+        case PERCENT_DISCOUNT:
+            discountAmount = movie.getFee().times(movie.getDiscountPercent());
+            break;
+        case NONE_DISCOUNT:
+            discountAmount = Money.ZERO;
+            break;
+    }
+
+    fee = movie.getFee().minus(discountAmount).times(audienceCount);
+} else {
+    fee = movie.getFee().times(audienceCount);
+}
+```
+```java
+public class ReservationAgency {
+    public Reservation reserve(Screening screening, Customer customer, int audienceCount) {
+        Money fee = screening.calculateFee(audienceCount);
+        return new Reservation(customer, screening, fee, audienceCount);
+    }
+}
+```
+- 기존에는 ReservationAgency가 할인 정책과 금액 계산 로직을 직접 처리했지만, 변경 후에는 Screening에게 요금 계산 책임을 위임하도록 바뀌었다.
+  <image src="image4_5.png" style="width:70%">
+  
