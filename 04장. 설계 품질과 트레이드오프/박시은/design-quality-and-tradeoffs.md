@@ -62,7 +62,7 @@ public class ReservationAgency {
 - 책임이 몰려있음 (할인 조건 검사, 할인 정책 계산, 가격 계산)
 - Movie 내부 정보를 직접 사용 (Movie가 바뀔 시 ReservationAgency도 수정해야한다.)
   <image src="image.png" style="width:70%">
-- switch 사용 (OCP 위반)
+- switch 사용 (OCP 위반) -> 다형성으로 구현
 
 # 02 응집도와 결합도
 - 캡슐화를 지키면 모듈 안의 응집도는 높아지고 모듈 사이의 결합도는 낮아진다.
