@@ -61,7 +61,6 @@ public class ReservationAgency {
 ```
 - 책임이 몰려있음 (할인 조건 검사, 할인 정책 계산, 가격 계산)
 - Movie 내부 정보를 직접 사용 (Movie가 바뀔 시 ReservationAgency도 수정해야한다.)
-  <image src="image.png" style="width:70%">
 - switch 사용 (OCP 위반) -> 다형성으로 구현
 
 # 02 응집도와 결합도
@@ -98,6 +97,7 @@ public class Movie {
 - 이 전략은 객체가 사용될 협력을 고려하지 않고 객체가 다양한 상황에서 사용될 수 있을 것이라는 막연한 추측을 기반으로 설계를 진행한다.
 ## 높은 결합도
   <image src="image4_4.png" style="width:70%">
+      
   - ResevationAgency는 모든 의존성이 모이는 결합도의 집결자다.
   - 시스템의 어떤 변경도 ReservationAgency의 변경을 유발한다.
 
