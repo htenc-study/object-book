@@ -1,4 +1,4 @@
-package org.etermity.movie.step02;
+package org.eternity.movie.step02;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;

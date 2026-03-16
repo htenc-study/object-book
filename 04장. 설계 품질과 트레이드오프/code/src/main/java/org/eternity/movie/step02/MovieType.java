@@ -1,4 +1,4 @@
-package org.etermity.movie.step02;
+package org.eternity.movie.step02;
 
 public enum MovieType {
     AMOUNT_DISCOUNT,    // 금액 할인 정책

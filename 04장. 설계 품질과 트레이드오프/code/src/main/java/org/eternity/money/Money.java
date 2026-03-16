@@ -1,4 +1,4 @@
-package org.etermity.money;
+package org.eternity.money;
 
 import java.math.BigDecimal;
 import java.util.Objects;

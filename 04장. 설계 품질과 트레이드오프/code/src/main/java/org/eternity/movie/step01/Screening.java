@@ -1,4 +1,4 @@
-package org.etermity.movie.step01;
+package org.eternity.movie.step01;
 
 import java.time.LocalDateTime;
 
