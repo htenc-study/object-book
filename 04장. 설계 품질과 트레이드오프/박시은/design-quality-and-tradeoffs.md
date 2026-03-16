@@ -61,8 +61,7 @@ public class ReservationAgency {
 ```
 - 책임이 몰려있음 (할인 조건 검사, 할인 정책 계산, 가격 계산)
 - Movie 내부 정보를 직접 사용 (Movie가 바뀔 시 ReservationAgency도 수정해야한다.)
-  <image src="image.png" style="width:70%">
-- switch 사용 (OCP 위반)
+- switch 사용 (OCP 위반) -> 다형성으로 구현
 
 # 02 응집도와 결합도
 - 캡슐화를 지키면 모듈 안의 응집도는 높아지고 모듈 사이의 결합도는 낮아진다.
@@ -92,12 +91,13 @@ public class Movie {
 }
 ```
 - getFee 메서드와 setFee 메서드는 Movie 내부에 Money 타입의 fee라는 이름의 인스턴스 변수가 존재한다는 사실을 퍼블릭 인터페이스에 노골적으로 드러낸다.
-- 만약 fee의 타입을 ㅂㄴ경한다고 가정하면 getFee 메서드의 반환타입, getFee 메서드를 호출하는 ReservationAgency의 구현을 변경된 타입에 맞게 함께 수정해야 한다.
+- 만약 fee의 타입을 변경한다고 가정하면 getFee 메서드의 반환타입, getFee 메서드를 호출하는 ReservationAgency의 구현을 변경된 타입에 맞게 함께 수정해야 한다.
 ### 추측에 의한 설계 전략
 - 접근자와 수정자에 과도하게 의존하는 설계 방식
 - 이 전략은 객체가 사용될 협력을 고려하지 않고 객체가 다양한 상황에서 사용될 수 있을 것이라는 막연한 추측을 기반으로 설계를 진행한다.
 ## 높은 결합도
   <image src="image4_4.png" style="width:70%">
+      
   - ResevationAgency는 모든 의존성이 모이는 결합도의 집결자다.
   - 시스템의 어떤 변경도 ReservationAgency의 변경을 유발한다.
 
