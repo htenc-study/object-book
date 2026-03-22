@@ -1,4 +1,4 @@
-<img width="1087" height="362" alt="image" src="https://github.com/user-attachments/assets/2f43932b-1685-4038-bfa5-e20139e92e9a" /># 01 책임 주도 설계를 향해
+# 01 책임 주도 설계를 향해
 ## 데이터보다 행동을 먼저 결정하라
 ## 협력이라는 문맥 안에서 책임을 결정하라
 - 메시지가 클라이언트의 의도를 표현한다는 사실을 주목하라.
