@@ -51,3 +51,55 @@
 
 - Screening은 예매 정보를 생성하는 데 필요한 영화, 상영 시간, 상영 순번 등의 정보에 대한 전문가이며, 예매 요금을 계산하는 데 필수적인 Movie를 알고 있다.
 - Screening을 Reservation의 CREATOR로 선택하는 것이 적절하다.
+
+# 03 구현을 통한 검증
+## DiscountCondition 개선하기
+- DiscountCondition은 하나 이상의 변경 이유를 가지기 때문에 응집도가 낮다.
+- 낮은 응집도를 해결하기 위해서는 변경의 이유에 따라 클래스를 분리해야 한다.
+### 변경 요인
+#### 새로운 할인 조건 추가
+- isSatisfiedBy 메서드 안의 if ~ else 구문을 수정해야 한다. 물론 새로운 할인 조건이 새로운 데이터를 요구한다면 DiscountCondition에 속성을 추가하는 작업도 필요한다.
+
+#### 순번 조건을 판단하는 로직 변경
+- isSatisfiedBySequence 메서드의 내부 구현을 수정해야 한다. 물론 순번 조건을 판단하는 데 필요한 데이터가 변경된다면 DiscountCondition의 sequence 속성 역시 변경해야 할 것이다.
+
+#### 기간 조건을 판단하는 로직이 변경되는 경우
+- isSatisfiedByPeriod 메서드의 내부 구현을 수정해야 한다. 물론 기간 조건을 판단하는 데 필요한 데이터가 변경된다면 DiscountCondition의 dayOfWeek, startTime, endTime 속성 역시 변경해야 할 것이다.
+
+### 변경의 이유를 파악하는 방법
+```java
+public class DiscountCondition {
+    private DiscountConditionType type;
+    private int sequence;
+    private DayOfWeek dayOfWeek;
+    private LocalTime startTime;
+    private LocalTime endTime;
+
+    public boolean isSatisfiedBy(Screening screening) {
+        if (type == DiscountConditionType.PERIOD) {
+            return isSatisfiedByPeriod(screening);
+        }
+
+        return isSatisfiedBySequence(screening);
+    }
+
+    private boolean isSatisfiedByPeriod(Screening screening) {
+        return dayOfWeek.equals(screening.getWhenScreened().getDayOfWeek()) &&
+                startTime.compareTo(screening.getWhenScreened().toLocalTime()) <= 0 &&
+                endTime.compareTo(screening.getWhenScreened().toLocalTime()) <= 0;
+    }
+
+    private boolean isSatisfiedBySequence(Screening screening) {
+        return sequence == screening.getSequence();
+    }
+}
+```
+#### 1. 인스턴스 변수가 초기화되는 시점을 살펴보기
+- DiscountCondition이 순번 조건을 표현하는 경우 sequence는 초기화 되지만 dayOfWeek, startTime, endTime은 초기화되지 않는다.
+- DiscountCondition이 기간조건을 표현하는 경우에는 dayOfWeek, startTime, endTime은 초기화되지만 sequence는 초기화되지 않는다.
+- 클래스의 속성이 다른 시점에 초기화되거나 일부만 초기화된다는 것은 응집도가 낮다는 증거이므로 함께 초기화되는 속성을 기준으로 코드를 분리해야 한다.
+#### 2. 메서드들이 인스턴스 변수를 사용하는 방식을 살펴보기
+- 메서드를 사용하는 속성에 따라 그룹이 나뉜다면 클래스의 응집도가 낮다고 볼 수 있다.
+- isSatisfiedBySequence 메서드는 sequence를 사용하지만 dayOfWeek, startTime, endTime은 사용하지 않는다.
+- isSatisfiednByPeriod 메서드는 dayOfWeek, startTime, endTime를 사용하지만 sequence는 사용하지 않는다.
+- 클래스의 응집도를 높이기 위해서는 속성 그룹과 해당 그룹에 접근하는 메서드 그룹을 기준으로 코드를 분리해야 한다.
