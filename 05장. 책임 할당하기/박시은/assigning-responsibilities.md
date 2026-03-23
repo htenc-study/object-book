@@ -103,3 +103,52 @@ public class DiscountCondition {
 - isSatisfiedBySequence 메서드는 sequence를 사용하지만 dayOfWeek, startTime, endTime은 사용하지 않는다.
 - isSatisfiednByPeriod 메서드는 dayOfWeek, startTime, endTime를 사용하지만 sequence는 사용하지 않는다.
 - 클래스의 응집도를 높이기 위해서는 속성 그룹과 해당 그룹에 접근하는 메서드 그룹을 기준으로 코드를 분리해야 한다.
+## 타입 분리하기
+- 순번 조건 타입과 기간 조건 타입을 SequenceCondition과 PeriodCondition이라는 두 개의 클래스로 분리한다.
+```java
+public class PeriodCondition {
+    private DayOfWeek dayOfWeek;
+    private LocalTime startTime;
+    private LocalTime endTime;
+
+    public PeriodCondition(DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime) {
+        this.dayOfWeek = dayOfWeek;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    public boolean isSatisfiedBy(Screening screening) {
+        return dayOfWeek.equals(screening.getWhenScreened().getDayOfWeek()) &&
+                startTime.compareTo(screening.getWhenScreened().toLocalTime()) <= 0 &&
+                endTime.compareTo(screening.getWhenScreened().toLocalTime()) >= 0;
+    }
+}
+```
+```java
+public class SequenceCondition {
+    private int sequence;
+
+    public SequenceCondition(int sequence) {
+        this.sequence = sequence;
+    }
+
+    public boolean isSatisfiedBy(Screening screening) {
+        return sequence == screening.getSequence();
+    }
+}
+```
+- SequenceCondition과 PeriodCondition은 자신의 모든 인스턴스 변수를 함께 초기화할 수 있다.
+- 클래스에 있는 모든 메서드는 동일한 인스턴스 변수 그룹을 사용한다.
+- 개별 클래스의 응집도가 향상됐다.
+## 다형성을 통해 분리하기
+- Movie의 입장에서 SequenceCondition과 PeriodCondition이 동일한 책임을 수행한다는 것은 동일한 역할을 수행한다는 것을 의미한다.
+  <img width="1117" height="241" alt="image" src="https://github.com/user-attachments/assets/42f0d154-6453-4f75-985d-9c0ba998e6e1" />
+```java
+public interface DiscountCondition {
+    boolean isSatisfiedBy(Screening screening);
+}
+```
+### 다형성(POLYMORPHISM) 패턴
+- 객체의 타입에 따라 변하는 행동이 있으면 타입을 분리하고 변화하는 행동을 각 타입의 책임으로 할당하는 방식.
+### 변경 보호(PROTECTED VARIATIONS) 패턴
+- 변경을 캡슐화하도록 책임을 할당하는 것
