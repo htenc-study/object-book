@@ -103,3 +103,47 @@ isDiscountable()
 calculateAmountDiscountedFee()
 ```
 - 행동 중심, 요청, 의도 표현
+
+# 03 원칙의 함정
+- 원칙이 현재 상황에 부적합하다고 판단된다면 과감하게 원칙을 무시하라.
+- 소프트웨어 설계에 법칙이란 존재하지 않는다.
+- 경우에 따라 다르다.
+## 디미터 법칙은 하나의 도트(.)를 강제하는 규칙이 아니다
+```java
+IntStream.of(1, 15, 20, 3, 9).filter(x -> x > 10).discount().count();
+```
+- 위 코드에서 of, filter, distinct 메서드는 모두 IntStream이라는 동일한 클래스의 인스턴스를 반환한다.
+- 디미터 법칙은 결합도와 관련된 것이며, 이 결합도가 문제가 되는것은 객체의 내부 구조가 외부로 노출되는 경우로 한정된다.
+- 하나 이상의 도트(.)를 사용하는 모든 케이스가 디미터 법친 위반인 것은 아니다.
+## 결합도와 응집도의 충돌
+```java
+public class PeriodCondition implements DiscountCondition {
+
+    public boolean isSatisfiedBy(Screening screening) {
+        return screening.getStartTime().getDayOfWeek().equals(dayOfWeek) &&
+                startTime.compareTo(screening.getStartTime().toLocalTime()) <= 0 &&
+                endTime.compareTo(screening.getStartTime().toLocalTime()) >= 0;
+    }
+}
+```
+- 얼핏 보기에는 Screening의 내부 상태를 가져와서 사용하기 때문에 캡슐화를 위반한 것으로 보일 수 있다.
+```java
+public class Screening {
+
+    public boolean isDiscountable(DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime) {
+        return whenScreened.getDayOfWeek().equals(dayOfWeek) &&
+                startTime.compareTo(whenScreened.toLocalTime()) <= 0 &&
+                endTime.compareTo(whenScreened.toLocalTime()) >= 0;
+    }
+}
+
+public class PeriodCondition implements DiscountCondition {
+
+    public boolean isSatisfiedBy(Screening screening) {
+        return screening.isDiscountable(dayOfWeek, startTime, endTime);
+    }
+}
+```
+- Screening이 기간에 따른 할인 조건을 판단하는 책임을 떠안게 되고 응집도가 낮아진다.
+- Screening이 PeriodCondition의 인스턴스 변수를 인자로 받기 때문에 두 객체 사이의 결합도를 높인다.
+- Screening의 캡슐화를 향상시키는 것보다 Screening의 응집도를 높이고 Screening과 PeriodCondition 사이의 결합도를 낮추는 것이 전체적인 관점에서 더 좋은 방법이다.
