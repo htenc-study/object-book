@@ -147,3 +147,19 @@ public class PeriodCondition implements DiscountCondition {
 - Screening이 기간에 따른 할인 조건을 판단하는 책임을 떠안게 되고 응집도가 낮아진다.
 - Screening이 PeriodCondition의 인스턴스 변수를 인자로 받기 때문에 두 객체 사이의 결합도를 높인다.
 - Screening의 캡슐화를 향상시키는 것보다 Screening의 응집도를 높이고 Screening과 PeriodCondition 사이의 결합도를 낮추는 것이 전체적인 관점에서 더 좋은 방법이다.
+
+# 04 명령-쿼리 분리 원칙
+- 루틴(routine) : 어떤 절차를 묶어 호출 가능하도록 이름을 부여한 기능 모듈
+## 프로시저(procedure)
+- 정해진 절차에 따라 내부의 상태를 변경하는 루틴
+- 부수효과를 발생시킬 수 있지만 값을 반환할 수 없다.
+## 함수(function)
+- 어떤 절차에 따라 필요한 값을 계산해서 반환하는 루틴
+- 값을 반환할 수 있지만 부수효과를 발생시킬 수 없다.
+
+## 명령(Command)
+- 객체의 상태를 수정하는 오퍼레이션
+- 반환값을 가질 수 없다.
+## 쿼리(Query)
+- 객체와 관련된 정보를 반환하는 오퍼레이션
+- 상태를 변경할 수 없다.
