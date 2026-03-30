@@ -25,5 +25,5 @@
     양식에 맞게 결과를 출력한다
         "이름: {직원명}, 급여: {계산된 금액}" 형식에 따라 출력 문자열을 생성한다
 ```
-<img width="2353" height="1050" alt="image" src="https://github.com/user-attachments/assets/321e100c-9dc9-4638-a78e-a326020eb942" />
+<img width="1000" alt="image" src="https://github.com/user-attachments/assets/321e100c-9dc9-4638-a78e-a326020eb942" />
 - 기능 분해를 위한 하향식 접근법은 먼저 필요한 기능을 생각하고 이 기능을 분해하고 정제하는 과정에서 필요한 데이터의 종류와 저장 방식을 식별한다.
