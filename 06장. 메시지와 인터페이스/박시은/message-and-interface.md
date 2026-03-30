@@ -48,6 +48,7 @@ public class SequenceCondition {
 ```
 - 메서드에 대해 제대로 커뮤니케이션하지 못한다. 두 메서드의 내부 구현을 정확하게 이해하지 못한다면 두 메서드가 동일한 작업을 수행한다는 사실을 알아채기 어렵다.
 - 메서드 수준에서 캡슐화를 위반한다는 것이다. 이 메서드들은 클라이언트로 하여금 협력하는 객체의 종류를 알도록 강요한다.
+- 조건 타입에 따라 분기문이 필요하다.
 ### '무엇'을 하는지
 ```java
 public class PeriodCondition implements DiscountCondition {
