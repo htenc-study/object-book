@@ -72,12 +72,15 @@ public class SequenceCondition implements DiscountCondition {
 ## 함께 모으기
 ### 디미터 법칙
 ```java
-screening.getWhenScreened().getDayofWeek()
+audience.getBag().minusAmount(ticket.getFee());
 ```
 - 객체 내부 구조를 따라 깊게 접근
 ```java
-screening.calculateFee(audienceCount)
+audience.minusAmount(ticket.getFee());
+ticketSeller.setTicket(audience);
 ```
+- Bag에 있던 돈 차감 책임을 Audience로 위임
+- Theater가 직접 처리하던 티켓 로직을 TicketSeller로 위임
 ### 묻지 말고 시켜라
 ```java
 if (condition.getType() == PERIOD) {
