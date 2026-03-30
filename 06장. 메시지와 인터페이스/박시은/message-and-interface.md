@@ -72,7 +72,7 @@ public class SequenceCondition implements DiscountCondition {
 ## 함께 모으기
 ### 디미터 법칙
 ```java
-screening.getWhenScreened.getDayofWeek()
+screening.getWhenScreened().getDayofWeek()
 ```
 - 객체 내부 구조를 따라 깊게 접근
 ```java
