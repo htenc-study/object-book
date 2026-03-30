@@ -36,6 +36,7 @@ screening.getMovie().getDiscountConditions();
 - 기차 충돌 : 클래스의 내부 구현이 외부로 노출됐을 때 나타나는 전형적인 형태로 메시지 전송자는 메시지 수신자의 내부 정보를 자세히 알게 된다.
 
 ## 의도를 드러내는 인터페이스
+### 메서드가 작업을 '어떻게' 수행하는지
 ```java
 public class PeriodCondition {
   public boolean isSatisfiedByPeriod(Screening screening) { ... } 
@@ -47,6 +48,7 @@ public class SequenceCondition {
 ```
 - 메서드에 대해 제대로 커뮤니케이션하지 못한다. 두 메서드의 내부 구현을 정확하게 이해하지 못한다면 두 메서드가 동일한 작업을 수행한다는 사실을 알아채기 어렵다.
 - 메서드 수준에서 캡슐화를 위반한다는 것이다. 이 메서드들은 클라이언트로 하여금 협력하는 객체의 종류를 알도록 강요한다.
+### '무엇'을 하는지
 ```java
 public class PeriodCondition implements DiscountCondition {
   public boolean isSatisfiedBy(Screening screening) { ... }
