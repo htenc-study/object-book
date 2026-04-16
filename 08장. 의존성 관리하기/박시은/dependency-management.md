@@ -76,7 +76,7 @@ Movie는 추상 클래스인 DiscountPolicy뿐만 아니라 구체 클래스인 
 ```java
 public class Movie {
   ...
-  private DiscountPolicy discountPolicy'
+  private DiscountPolicy discountPolicy
 
   public Movie(String title, Duration runningTime, Money fee, DiscountPolicy discountPolicy) {
     ...
